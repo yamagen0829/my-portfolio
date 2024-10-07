@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>エラー</title>
+</head>
+<body>
+    <h1>エラーが発生しました</h1>
+    <p th:if="${errorMessage != null}" th:text="${errorMessage}">エラーメッセージ</p>
+    <a th:href="@{/}">ホームに戻る</a>
+</body>
+</html>  

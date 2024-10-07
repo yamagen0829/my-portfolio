@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+ <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">    
+     <head>
+         <div th:replace="~{fragment :: meta}"></div>   
+              
+         <div th:replace="~{fragment :: styles}"></div>
+           
+         <title>レビュー一覧</title>   
+     </head>
+     <body>
+         <div class="nagoyameshi-wrapper">
+             <!-- ヘッダー -->
+             <div th:replace="~{fragment :: header}"></div>
+             
+             <main>
+                 <div class="container pt-4 pb-5 nagoyameshi-container">
+                     <div class="row justify-content-center">
+                         <div class="col-xxl-9 col-xl-10 col-lg-11">
+                             <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                                 <ol class="breadcrumb mb-0">                        
+                                     <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+                                     <li class="breadcrumb-item"><a th:href="@{/restaurants}">店舗一覧</a></li>
+                                     <li class="breadcrumb-item"><a th:href="@{/restaurants/__${restaurant.getId()}__}">店舗詳細</a></li>
+                                     <li class="breadcrumb-item active" aria-current="page">レビュー一覧</li>
+                                 </ol>
+                             </nav>                                                           
+                                     <!-- レビュー機能 -->   
+	                           <div>
+								   <h1 class="mb-4 text-center" th:text="${restaurant.getName()} + 'レビュー一覧'"></h1>    
+									    <!-- ログインしているのであれば投稿できるようにする -->
+									    <div class="container">
+										    <div class="row justify-content-center">
+										        <div class="col-md-8">
+										            <p th:text="'User Paid: ' + ${isPaidUser}"></p>
+										        </div>
+										    </div>
+										    <div class="row justify-content-center">
+										        <div class="col-md-6">
+										            <sec:authorize access="isAuthenticated()">
+										                <div th:if="${isPaidUser}">
+										                    <a th:href="@{/reviews/postReviewForm/{restaurantId}(restaurantId=${restaurant.id}, redirectUrl='/reviews/reviewList/' + ${restaurant.id})}" 
+										                       class="btn text-white shadow-sm w-100 nagoyameshi-btn mb-2">
+										                       レビューを投稿する
+										                    </a>
+										                </div>
+										                <div th:if="${!isPaidUser}">
+										                    <a th:href="@{/user/paid}" 
+										                       class="btn text-white shadow-sm w-100 nagoyameshi-btn mb-2">
+										                       レビューを投稿する
+										                    </a>
+										                    <div class="note">(有料会員限定機能です。
+										                        <a th:href="@{/user/paid}">会員登録はこちら</a>)
+										                    </div>
+										                </div>
+										            </sec:authorize>
+										        </div>
+										    </div>
+										</div>
+									    
+									    <div class="container">
+									        <div class="row align-items-start">
+									            <!-- レビューの表示部分 -->
+									            <div th:if="${not #lists.isEmpty(reviewPage.content)}">
+									                <div class="row justify-content-evenly">
+									                    <div class="col-md-6 mb-3" th:each="review : ${reviewPage.content}">
+									                        <div class="review-item">
+									                            <div class="review-details">
+									                                <span class="font-weight-bold" th:text="${review.user.name}"></span><br>
+									                                <div class="star-rating">
+									                                    <span th:each="i: ${#numbers.sequence(1, review.score)}">&#9733;</span>
+									                                    <span th:unless="${review.score == 5}" th:each="i: ${#numbers.sequence(review.score + 1, 5)}">&#9734;</span>
+									                                </div>
+									                                <p th:text="${review.createdAt}"></p>
+									                                <p th:text="${review.content}"></p>
+									                            </div>
+									                            <div class="review-actions" sec:authorize="isAuthenticated()">
+									                                <div th:if="${#authentication.principal.user.name == review.user.name}">
+									                                    <a th:if="${isPaidUser}" 
+									                                       th:href="@{/reviews/editReviewForm/{reviewId}(reviewId=${review.id}, redirectUrl='/reviews/reviewList/' + ${restaurant.id})}" class="btn btn-link">編集</a>
+									                                    <a th:if="${!isPaidUser}" 
+									                                       th:href="@{/user/paid}" class="btn btn-link">編集</a>
+									                                    <button th:if="${isPaidUser}" 
+									                                            class="btn btn-link nagoyameshi-link-danger" 
+									                                            data-bs-toggle="modal"
+									                                            th:data-bs-target="${'#deleteReviewModal' + review.id}" 
+									                                            th:data-redirect-url="'/reviews/reviewList/' + ${restaurant.id}">削除</button>
+									                                    <button th:if="${!isPaidUser}" 
+									                                            class="btn btn-link nagoyameshi-link-danger" onclick="location.href='/user/paid'">削除</button> 
+									                                </div>
+									                            </div>
+									                        </div>
+									                    </div>
+									                </div>
+									            </div>
+									            <div th:if="${#lists.isEmpty(reviewPage.content)}">
+									                <p class="text-center">レビューがありません。</p>
+									            </div>
+									        </div>
+									    </div>
+									
+									    		<!-- 削除用レビュー モーダル -->
+									    		<div class="modal fade" th:each="review : ${reviewPage.content}" th:id="'deleteReviewModal' + ${review.id}" tabindex="-1" aria-labelledby="deleteReviewModalLabel" aria-hidden="true">
+												    <div class="modal-dialog">
+												        <div class="modal-content">
+												            <div class="modal-header">
+												                <h5 class="modal-title" th:text="${review.restaurant.name + ' のレビューを削除してもよろしいですか？'}"></h5>
+												                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+												            </div>
+												            <div class="modal-footer">
+												                <form method="post" th:action="@{/reviews/deleteReview/{reviewId}(reviewId=${review.id})}" th:id="'deleteReviewForm' + ${review.id}">
+												                    <input type="hidden" name="redirectUrl" th:value="'/restaurants/' + ${restaurant.id}"/>
+												                    <button type="submit" class="btn nagoyameshi-btn-danger text-white shadow-sm">削除</button>
+												                </form>
+												            </div>
+												        </div>
+												    </div>
+												</div>
+
+											  <!--  <div th:each="review : ${reviewPage.content}">
+											        <div class="modal fade" th:id="'deleteReviewModal' + ${review.id}" tabindex="-1" aria-labelledby="deleteReviewModalLabel" aria-hidden="true">
+											            <div class="modal-dialog">
+											                <div class="modal-content">
+											                    <div class="modal-header">
+											                        <h5 class="modal-title" th:id="deleteReviewModalLabel" th:text="${review.restaurant.name + ' のレビューを削除してもよろしいですか？'}"></h5>
+											                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+											                    </div>
+											                    <div class="modal-footer">
+											                        <form method="post" th:action="@{/reviews/deleteReview/{reviewId}(reviewId=${review.id})}">
+											                            <input type="hidden" name="_method" value="DELETE"/>
+											                            <button type="submit" class="btn nagoyameshi-btn-danger text-white shadow-sm">削除</button>
+											                        </form>
+											                    </div>
+											                </div>
+											            </div>
+											        </div>
+											    </div> -->
+									    
+									            <div th:if="${reviewPage.getTotalPages() > 1}" class="d-flex justify-content-center">
+					                                 <nav aria-label="レビュ一覧ページ">
+					                                     <ul class="pagination">
+					                                         <li class="page-item">
+					                                             <span th:if="${reviewPage.isFirst()}" class="page-link disabled">前</span>
+					                                             <a th:unless="${reviewPage.isFirst()}" th:href="@{/reviews/reviewList/{restaurantId}(restaurantId=${restaurant.id}, page = ${reviewPage.getNumber() - 1})}" class="page-link nagoyameshi-page-link">前</a>
+					                                         </li>
+					                                         <li th:each="i : ${#numbers.sequence(0, reviewPage.getTotalPages() - 1)}" class="page-item">
+					                                             <span th:if="${i == reviewPage.getNumber()}" class="page-link active nagoyamehsi-active" th:text="${i + 1}"></span>
+					                                             <a th:unless="${i == reviewPage.getNumber()}" th:href="@{/reviews/reviewList/{restaurantId}(restaurantId=${restaurant.id}, page = ${i})}" class="page-link nagoyameshi-page-link" th:text="${i + 1}"></a>
+					                                         </li>
+					                                         <li class="page-item">                        
+					                                             <span th:if="${reviewPage.isLast()}" class="page-link disabled">次</span>
+					                                             <a th:unless="${reviewPage.isLast()}" th:href="@{/reviews/reviewList/{restaurantId}(restaurantId=${restaurant.id}, page = ${reviewPage.getNumber() + 1})}" class="page-link nagoyameshi-page-link">次</a>
+					                                         </li>
+					                                     </ul>
+					                                 </nav> 
+					                             </div>      
+								 </div>
+                         </div>
+                     </div>
+                 </div>
+             </main>
+             
+             <!-- フッター -->
+             <div th:replace="~{fragment :: footer}"></div>
+         </div>    
+         
+         <div th:replace="~{fragment :: scripts}"></div> 
+         <script th:src="@{/js/redirect.js}"></script> 
+   </body>
+ </html>

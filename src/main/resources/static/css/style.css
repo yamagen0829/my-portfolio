@@ -1,0 +1,202 @@
+ html {
+   font-size: 14px;
+ }
+ 
+ body {
+   font-family: 'Noto Sans JP', sans-serif;  
+ }
+ 
+ h1 {
+   font-size: 1.5rem;
+ }
+ 
+ h2 {
+	 font-size: 1.475rem;
+ }
+ 
+ h3 {
+	 font-size: 1.25rem;
+ }
+ 
+ a {
+   color: #a66851;
+   text-decoration: none !important;
+ }
+ 
+ a:hover {
+     color: #a67651;
+ }
+ 
+ footer {
+   width: 100%;
+   height: 60px;
+   position: absolute;
+   bottom: 0;    
+   background-color: #f2f0eb;
+ }
+ 
+ .nagoyameshi-wrapper {
+   min-height: 100vh;
+   position: relative;
+   padding-bottom: 60px;
+   box-sizing: border-box;
+ }
+ 
+ .nagoyameshi-navbar {
+   min-height: 20px;
+ }
+ 
+ .nagoyameshi-logo {
+   height: 100px;
+     
+ }
+ 
+ .nagoyameshi-btn {
+   background-color: #a67951 !important;   
+   transition: 0.1s;
+ }
+ 
+ .nagoyameshi-btn:hover {
+   opacity: 0.8;   
+ }
+ 
+ .nagoyameshi-page-link {
+   color: #a66851;
+ }
+ 
+ .nagoyameshi-btn:hover {
+   color: #a67651;
+ }
+ 
+ .nagoyameshi-active {
+   background-color: #a66851 !important;
+   border-color: #a66851 !important;
+ }
+ 
+ .nagoyameshi-pre-wrap {
+   /*改行文字で行を折り返す*/
+   white-space: pre-wrap;
+ }
+ 
+ .nagoyameshi-link-danger {
+     color: #f2594b;
+ }
+ 
+ .nagoyameshi-link-danger:hover {
+     color: #a63c3c;
+ }
+ 
+ .nagoyameshi-btn-danger {
+     background-color: #f2594b !important;
+     transition: 0.1s;
+ }
+ 
+ .nagoyameshi-btn-danger:hover {
+   opacity: 0.8;   
+ }
+ 
+ .nagoyameshi-dropdown-item:active {
+	 background-color: #a66851;
+ }
+
+ .nagoyameshi-card-link {
+   transition: 0.3s;
+ }
+ 
+ .nagoyameshi-card-link:hover {
+   opacity: 0.7;
+ }
+ 
+ .nagoyameshi-horizontal-card-image {
+   width: 100%;
+   height: 240px;
+   object-fit: cover;
+ }
+ 
+ .nagoyameshi-sort-box {
+   width: 150px;
+ }
+ 
+ .nagoyameshi-vertical-card-image {
+   width: 100%;
+   height: 150px;
+   object-fit: cover;
+ }
+ 
+ .nagoyameshi-search-form {
+     max-width: 300px;
+ }
+ 
+ .review-item {
+	border: 1px solid #dee2e6;
+    padding: 15px;
+    margin: 10px 0; 
+ }
+ 
+ .star-rating {
+   font-size: 1.5rem;
+   color: #ffd700;
+ }
+ .review-item {
+        position: relative; /* 削除と編集ボタンを絶対配置するための基準 */
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .review-details {
+        flex: 1;
+    }
+
+    .review-actions {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .review-actions a, .review-actions button {
+        margin-bottom: 5px;
+    }
+    
+    .review-note {
+        text-align: center;
+        margin-top: 10px;
+    }
+    
+    .heart-mark {
+		color: #f2594b;
+	}
+	
+	.favorite-note {
+		margin-top: 10px;
+	}
+    
+    /* 管理者トップページの集計結果を小さく横並びに表示するためのスタイル */
+	.stats-container {
+	    display: flex;
+	    justify-content: space-around;
+	    align-items: center;
+	    margin-bottom: 20px;
+	}
+	
+	.stats-item {
+	    flex: 1;
+	    text-align: center;
+	    padding: 10px;
+	    border: 1px solid #ddd;
+	    margin: 5px;
+	    border-radius: 5px;
+	    background-color: #f8f9fa;
+	    font-size: 0.8em; /* サイズを小さくする */
+	} 
+        
+ @media screen and (min-width: 1400px) {
+   .nagoyameshi-container {
+     max-width: 1200px;
+   }
+ }

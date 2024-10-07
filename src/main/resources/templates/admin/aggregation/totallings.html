@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <div th:replace="~{fragment :: meta}"></div>   
+              
+        <div th:replace="~{fragment :: styles}"></div>
+      	
+        <title>集計機能</title>	
+    </head>
+    <body>
+        <div class="nagoyameshi-wrapper">
+             <!-- ヘッダー -->
+             <div th:replace="~{fragment :: header}"></div>
+             
+             <main>
+                 <div class="container pt-4 pb-5 nagoyameshi-container">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-5 col-lg-6 col-md-8">
+                            
+                            <h1 class="mb-4 text-center">集計結果</h1> 
+                             
+                            <div class="container mb-4">
+                                 <div class="row pb-2 mb-2 border-bottom">
+                                     <div class="col-4">
+                                         <h2 class="fw-bold">総会員数</h2>
+                                     </div>
+             
+                                     <div class="col">
+                                         <h2 th:text="${totalUsers}" class="fw-bold text-center"></h2>
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             <div class="container mb-4">
+                                 <div class="row pb-2 mb-2 border-bottom">
+                                     <div class="col-4">
+                                         <h2 class="fw-bold">無料会員数</h2>
+                                     </div>
+             
+                                     <div class="col">
+                                         <h2 th:text="${freeMembership}" class="fw-bold text-center"></h2>
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             <div class="container mb-4">
+                                 <div class="row pb-2 mb-2 border-bottom">
+                                     <div class="col-4">
+                                         <h2 class="fw-bold">有料会員数</h2>
+                                     </div>
+             
+                                     <div class="col">
+                                         <h2 th:text="${paidMembership}" class="fw-bold text-center"></h2>
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             <div class="container mb-4">
+                                 <div class="row pb-2 mb-2 border-bottom">
+                                     <div class="col-4">
+                                         <h2 class="fw-bold">店舗数</h2>
+                                     </div>
+             
+                                     <div class="col">
+                                         <h2 th:text="${totalRestaurants}" class="fw-bold text-center"></h2>
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             <h1 class="mb-4 text-center">月間売上</h1> 
+                             
+                             <div class="container mb-4">
+                                 <div class="row pb-2 mb-2 border-bottom">
+                                     <div class="col-4">
+                                         <h3 class="fw-bold">売上(単位：円)</h3>
+                                     </div>
+             
+                                     <div class="col">
+                                         <h2 th:text="${monthlySales}" class="fw-bold text-center"></h2>
+                                     </div>
+                                 </div>
+                             </div> 
+                                  
+                        </div>
+                    </div>
+                </div>             
+                     
+             </main>
+             
+             <!-- フッター -->
+             <div th:replace="~{fragment :: footer}"></div>
+         </div>    
+         
+         <div th:replace="~{fragment :: scripts}"></div>
+    </body>
+</html>

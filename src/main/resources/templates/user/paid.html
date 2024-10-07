@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+ <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">    
+     <head>
+         <div th:replace="~{fragment :: meta}"></div>
+         <meta name="_csrf" content="[[${_csrf.token}]]">
+         <meta name="_csrf_header" content="[[${_csrf.headerName}]]">
+   
+              
+         <div th:replace="~{fragment :: styles}"></div>
+           
+         <title>有料会員登録</title>   
+     </head>
+     <body>
+         <div class="nagoyameshi-wrapper">
+             <!-- ヘッダー -->
+             <div th:replace="~{fragment :: header}"></div>
+             
+             <main>
+                 <div class="container pb-5 nagoyameshi-container">
+                     <div class="row justify-content-center">
+                         <div class="col-xl-5 col-lg-6 col-md-8">
+                             <nav class="my-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                                 <ol class="breadcrumb mb-0"> 
+                                     <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>                       
+                                     <li class="breadcrumb-item"><a th:href="@{/user}">会員情報</a></li>
+                                     <li class="breadcrumb-item active" aria-current="page">有料会員登録</li>
+                                 </ol>
+                             </nav> 
+                             
+                             <h1 class="mb-3 text-center">有料会員登録</h1>                                  
+                             
+                             <div th:if="${successMessage}" class="alert alert-info">
+                                 <span th:text="${successMessage}"></span>
+                             </div> 
+                             <div th:if="${errorMessage}" class="alert alert-danger">
+                                <span th:text="${errorMessage}"></span>
+                            </div> 
+                            
+                            <!-- デバッグのためにユーザーの状態を表示する -->	
+<!--                            <p>ユーザーの会員状態: <span th:text="${user.paid}">未払い</span></p>                              -->
+                             
+	                       <p th:if="${user.paid == false}" class="text-center"> 有料会員(サブスクリプションに入る）と以下の機能が使えます。<br>月額300円からサブスクリプション契約できます。</p>
+	                       <p th:if="${user.paid == true}" class="text-center"> 無料会員になると以下の機能が使えなくなります。</p>
+	                         <ul>
+								 <li>店舗の予約機能</li>
+								 <li>お気に入り店舗の一覧表示・追加機能</li>
+								 <li>レビュー投稿・編集機能</li>
+				                 <li>クレジットカード登録・編集・支払い機能</li>
+							 </ul>
+    		　　
+							<div th:if="${user.paid == false}">	
+	                             <form id="checkout-form" th:action="@{/user/checkout}" method="post">
+                                      <input type="hidden" id="email" name="email" th:value="${user.email}">
+                                      <input type="hidden" id="user-id" name="userId" th:value="${user.id}">
+	                                 <button type="submit" class="btn btn-primary">有料会員へアップグレード</button>
+	                             </form> 
+                           </div>  
+                           <div th:if="${user.paid == true}">  
+	                             <form th:action="@{/user/downgrade}" method="post">
+	                                 <input type="hidden" name="userId" th:value="${user.id}"/>
+	                                 <button type="submit" class="btn btn-primary">無料会員へダウングレード</button>
+	                             </form>
+	                            <form id="edit-card-button" th:action="@{/user/billingPortal}" method="post">
+									 <input type="hidden" id="email" name="email" th:value="${user.email}">
+                                      <input type="hidden" id="user-id" name="userId" th:value="${user.id}">
+                                      <button type="submit" class="btn btn-secondary mt-3">クレジットカード情報を編集</button>
+								</form>
+	                       </div>  
+	                       　　<!-- 退会フォームは常に表示 -->       
+	                             <form th:action="@{/user/cancel}" method="post">
+	                                 <input type="hidden" name="userId" th:value="${user.id}"/>
+	                                 <button type="submit" class="btn btn-primary">退会</button>
+	                             </form>                                                                                                             
+                         </div>
+                     </div>
+                 </div>
+             </main>
+             
+             <!-- フッター -->
+             <div th:replace="~{fragment :: footer}"></div>
+         </div>    
+         
+         <div th:replace="~{fragment :: scripts}"></div>
+         <script src="https://js.stripe.com/v3"></script>
+         <script th:inline="javascript">
+             const sessionId = /*[[${sessionId}]]*/"sessionId";                
+             const csrfHeader = /*[[${_csrf.headerName}]]*/"X-CSRF-TOKEN";
+             const csrfToken = /*[[${_csrf.token}]]*/"PLACEHOLDER_TOKEN";
+             const email = /*[[${user.email}]]*/"example@example.com";
+             console.log('CSRF Header:', csrfHeader); // 出力確認
+             console.log('CSRF Token:', csrfToken);   // 出力確認
+             console.log('Email:', email);            // 出力確認
+         </script>           
+          <script th:src="@{/js/stripe.js}"></script>
+   </body>
+ </html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <div th:replace="~{fragment :: meta}"></div>   
+              
+        <div th:replace="~{fragment :: styles}"></div>
+      	
+        <title>NAGOYAMESHI</title>	
+    </head>
+    <body>
+        <div class="nagoyameshi-wrapper">
+             <!-- ヘッダー -->
+             <div th:replace="~{fragment :: header}"></div>
+             
+             <main>
+                 <div class="container pt-4 pb-5 nagoyameshi-container">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-5 col-lg-6 col-md-8">
+                            
+                            <h1 class="mb-4 text-center">利用規約</h1> 
+                             
+                             <div class="container mb-4">
+                                 <div class="row pb-2 mb-2 border-bottom">
+                                     <div class="col-4">
+                                         <span class="fw-bold">条項1</span>
+                                     </div>
+             
+                                     <div class="col">
+                                         <span th:text="${terms.getArticle1()}"></span>
+                                     </div>
+                                 </div>                    
+             
+                                 <div class="row pb-2 mb-2 border-bottom">
+                                     <div class="col-4">
+                                         <span class="fw-bold">条項2</span>
+                                     </div>
+             
+                                     <div class="col">
+                                         <span th:text="${terms.getArticle2()}"></span>
+                                     </div>
+                                 </div>                    
+                                 
+                                 <div class="row pb-2 mb-2 border-bottom">
+                                     <div class="col-4">
+                                         <span class="fw-bold">条項3</span>
+                                     </div>
+             
+                                     <div class="col">
+                                         <span th:text="${terms.getArticle3()}"></span>
+                                     </div>
+                                 </div>                           
+                             </div>                     
+                           
+                             <!-- 管理者のみ表示される編集リンク -->
+                             <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{/com/terms/{id}/termsedit(id=${terms.id})}" class="btn btn-primary">編集</a>
+                                                             
+                                 <ul>
+									 <li>このアプリはオリジナルです。</li>
+									 <li>練習で作っております。</li>
+									 <li>アドバイスをいただけたら幸いです。</li>
+								 </ul>           
+                        </div>
+                    </div>
+                </div>             
+                     
+             </main>
+             
+             <!-- フッター -->
+             <div th:replace="~{fragment :: footer}"></div>
+         </div>    
+         
+         <div th:replace="~{fragment :: scripts}"></div>
+    </body>
+</html>

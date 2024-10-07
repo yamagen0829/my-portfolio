@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+ <html xmlns:th="https://www.thymeleaf.org">
+     <head>
+         <div th:replace="~{fragment :: meta}"></div>   
+              
+         <div th:replace="~{fragment :: styles}"></div>
+         
+         <title>会社情報編集</title>       
+     </head>
+     <body>
+         <div class="nagoyameshi-wrapper">
+             <!-- ヘッダー -->
+             <div th:replace="~{fragment :: header}"></div>
+             
+             <main>
+                 <div class="container pt-4 pb-5 nagoyameshi-container">
+                     <div class="row justify-content-center">
+                         <div class="col-xl-5 col-lg-6 col-md-8">
+                             
+                             <h1 class="mb-4 text-center">会社情報編集</h1>         
+                             
+                             <form method="post" th:action="@{/com/{id}/edit(id=${companyEditForm.id})}" th:object="${companyEditForm}" enctype="multipart/form-data">   
+                                 <input type="hidden" th:field="*{id}">
+                                                                                          
+                                 <div class="form-group row mb-3">
+                                     <div class="col-md-4">
+                                         <label for="companyName" class="col-form-label text-md-left fw-bold">会社名</label>
+                                     </div>
+                                     <div class="col-md-8">                                    
+                                         <div th:if="${#fields.hasErrors('companyName')}" class="text-danger small mb-2" th:errors="*{companyName}"></div>                                    
+                                         <input type="text" class="form-control" th:field="*{companyName}" autofocus>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="form-group row mb-3">
+                                     <div class="col-md-4">
+                                         <label for="name" class="col-form-label text-md-left fw-bold">代表者名</label>
+                                     </div>
+                                     <div class="col-md-8">                            
+                                         <div th:if="${#fields.hasErrors('name')}" class="text-danger small mb-2" th:errors="*{name}"></div>                                        
+                                         <input class="form-control" th:field="*{name}">
+                                     </div>
+                                 </div>                                                   
+                                                                                                                         
+                                 <div class="form-group row mb-3">
+                                     <div class="col-md-4">
+                                         <label for="postalCode" class="col-form-label text-md-left fw-bold">郵便番号</label>
+                                     </div>
+                                     <div class="col-md-8">
+                                         <div th:if="${#fields.hasErrors('postalCode')}" class="text-danger small mb-2" th:errors="*{postalCode}"></div>
+                                         <input type="text" class="form-control" th:field="*{postalCode}">
+                                     </div>
+                                 </div>
+                                                                                                               
+                                 <div class="form-group row mb-3">
+                                     <div class="col-md-4">
+                                         <label for="address" class="col-form-label text-md-left fw-bold">住所</label>
+                                     </div>
+                                     <div class="col-md-8">
+                                         <div th:if="${#fields.hasErrors('address')}" class="text-danger small mb-2" th:errors="*{address}"></div>
+                                         <input type="text" class="form-control" th:field="*{address}">  
+                                     </div>
+                                 </div>                                                                                
+                                 
+                                 <div class="form-group row mb-3">
+                                     <div class="col-md-4">
+                                         <label for="phoneNumber" class="col-form-label text-md-left fw-bold">事業内容</label>
+                                     </div>
+                                     <div class="col-md-8">
+                                         <div th:if="${#fields.hasErrors('businessContent')}" class="text-danger small mb-2" th:errors="*{businessContent}"></div>
+                                         <input type="text" class="form-control" th:field="*{businessContent}">                                
+                                     </div>
+                                 </div>
+                                                                                                                         
+                                 
+                                 <div class="form-group d-flex justify-content-center my-4">
+                                     <button type="submit" class="btn text-white shadow-sm w-50 nagoyameshi-btn">更新</button>
+                                 </div>
+                             </form>                                                                         
+                         </div>
+                     </div>
+                 </div>                 
+             </main>
+             
+             <!-- フッター -->
+             <div th:replace="~{fragment :: footer}"></div>
+         </div>    
+         
+         <div th:replace="~{fragment :: scripts}"></div>  
+         <script th:src="@{/js/preview.js}"></script>     
+     </body>
+ </html>
