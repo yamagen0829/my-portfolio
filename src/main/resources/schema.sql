@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS roles (
      role_id INT NOT NULL,    
      enabled BOOLEAN NOT NULL,
      paid BOOLEAN NOT NULL,
-     stripe_customer_id VARCHAR(255) NOT NULL,
+     stripe_customer_id VARCHAR(255),
      created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
      updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,    
      FOREIGN KEY (role_id) REFERENCES roles (id)
