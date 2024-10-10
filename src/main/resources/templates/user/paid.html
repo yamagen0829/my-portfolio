@@ -87,9 +87,6 @@
              const csrfHeader = /*[[${_csrf.headerName}]]*/"X-CSRF-TOKEN";
              const csrfToken = /*[[${_csrf.token}]]*/"PLACEHOLDER_TOKEN";
              const email = /*[[${user.email}]]*/"example@example.com";
-             console.log('CSRF Header:', csrfHeader); // 出力確認
-             console.log('CSRF Token:', csrfToken);   // 出力確認
-             console.log('Email:', email);            // 出力確認
          </script>           
           <script th:src="@{/js/stripe.js}"></script>
    </body>
