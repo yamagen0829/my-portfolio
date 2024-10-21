@@ -93,10 +93,6 @@ public class ReservationController {
         Integer numberOfPeople = reservationInputForm.getNumberOfPeople();   
         Integer numberOfSeat = restaurant.getNumberOfSeat();
         
-//        User currentUser = getCurrentUser();
-//        if (currentUser == null || Boolean.FALSE.equals(currentUser.getPaid())){
-//        	return "redirect:/user/paid";
-//        }
         User currentUser = getCurrentUser();
         boolean isPaidUser = false;
         

@@ -32,10 +32,7 @@ public class StripeService {
 	private String stripePriceId;	
     
 	private final UserService userService;
-	
-	//private static final Logger logger = LoggerFactory.getLogger(StripeService.class);
-	
-    
+	 
     public StripeService(UserService userService) {
         this.userService = userService;
     }   
@@ -88,20 +85,14 @@ public class StripeService {
  // Billingポータル用セッションを生成するメソッド
     public String createBillingPortalSession(String customerId, String returnUrl) throws StripeException {
         Stripe.apiKey = stripeApiKey;
-        
-//     // ログを追加
-//        logger.info("Creating Billing Portal session for customer: {}" + customerId);
-//        
+             
         com.stripe.param.billingportal.SessionCreateParams params =
     		com.stripe.param.billingportal.SessionCreateParams.builder()
     			.setReturnUrl(returnUrl)
     			.setCustomer(customerId)
     			.build();
         com.stripe.model.billingportal.Session session = com.stripe.model.billingportal.Session.create(params);
-        
-//     // セッションURLの確認
-//        logger.info("Created Billing Portal session URL: {}" + session.getUrl());
-//        
+              
           return session.getUrl();  // BillingポータルのURL取得
     }
 
@@ -129,13 +120,8 @@ public class StripeService {
             if (user != null && customerId != null) {
                 user.setStripeCustomerId(customerId);
                 userService.save(user); //ここでユーザーを保存し、stripeCustomerIdを更新
-//                logger.info("Updated user with stripe customer id: " + customerId);
-            }// else {
-//                logger.error("User or customer ID not found");
-           // }
-        } //else {
-//            logger.error("Failed to deserialize Stripe session");
-        //}
+            }
+        } 
     }
     
     public void processPaymentFailed(Event event) {		
@@ -184,10 +170,6 @@ public class StripeService {
 	    if (optionalStripeObject.isPresent()) {
 	        Subscription subscription = (Subscription) optionalStripeObject.get();
 	        String customerId = subscription.getCustomer();
-	        // 必要に応じて他の処理を実装する
-	     //   logger.info("Subscription created for customer id: " + customerId);
-	    } //else {
-	       // logger.error("Failed to deserialize Stripe subscription event");
-	   // }
+	    } 
     } 	    
 }

@@ -90,35 +90,6 @@
 									                    </div>
 									                </div>
 									            </div>
-									           <!-- <div th:if="${not #lists.isEmpty(reviewPage.content)}">
-									                <div class="row justify-content-evenly">
-									                    <div class="col-md-6 mb-3" th:each="review : ${reviewPage.content}">
-									                        <div class="review-item">
-									                            <div class="review-details">
-									                                <span class="font-weight-bold" th:text="${review.user.name}"></span><br>
-									                                <div class="star-rating">
-									                                    <span th:each="i: ${#numbers.sequence(1, review.score)}">&#9733;</span>
-									                                    <span th:unless="${review.score == 5}" th:each="i: ${#numbers.sequence(review.score + 1, 5)}">&#9734;</span>
-									                                </div>
-									                                <p th:text="${review.createdAt}"></p>
-									                                <p th:text="${review.content}"></p>
-									                            </div>
-									                            <div class="review-actions" sec:authorize="isAuthenticated()">
-									                                <div th:if="${#authentication.principal.user.name == review.user.name}">
-									                                    <a th:if="${#authentication.principal.user.paid}" 
-									                                       th:href="@{/admin/reviews/editReviewForm/{reviewId}(reviewId=${review.id})}" class="btn btn-link">編集</a>
-									                                    <a th:if="${!#authentication.principal.user.paid}" 
-									                                       th:href="@{/user/paid}" class="btn btn-link">編集</a>
-									                                    <button th:if="${#authentication.principal.user.paid}" 
-									                                            class="btn btn-link nagoyameshi-link-danger" data-bs-toggle="modal" th:data-bs-target="${'#deleteReviewModal' + review.id}">削除</button>
-									                                    <button th:if="${!#authentication.principal.user.paid}" 
-									                                            class="btn btn-link nagoyameshi-link-danger" onclick="location.href='/user/paid'">削除</button> 
-									                                </div>
-									                            </div>
-									                        </div>
-									                    </div>
-									                </div>
-									            </div> -->
 									            <div th:if="${#lists.isEmpty(reviewPage.content)}">
 									                <p class="text-center">レビューがありません。</p>
 									            </div>

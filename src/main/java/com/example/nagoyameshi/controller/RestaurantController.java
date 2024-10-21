@@ -134,27 +134,6 @@ public class RestaurantController {
         return "restaurants/show";
     } 
     
-// // 現在のユーザーが有料会員かどうかを確認するメソッド
-//    private String getCurrentUsername() {
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (principal instanceof UserDetails) {
-//            return ((UserDetails) principal).getUsername();
-//        } else {
-//            return principal.toString();
-//        }
-//    }
-//    
-//    private User getCurrentUser() {
-//        String email = getCurrentUsername();
-//        Optional<User> optionalUser = userRepository.findByEmail(email);
-//        return optionalUser.orElse(null);
-//    }
-//    
-//    private boolean isPaidUser() {
-//        User user = getCurrentUser();
-//        return user != null && Boolean.TRUE.equals(user.getPaid());
-//    }
-    
     @PostMapping("/{id}/addFavorite")
     public String addFavorite(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
     	User currentUser = getCurrentUser();
@@ -201,23 +180,4 @@ public class RestaurantController {
         }
         return null;
     }
-//    	if (!isPaidUser()) {
-//            return "redirect:/user/paid"; // 有料会員ページにリダイレクト
-//        }
-//    	
-//    	try {
-//    	    User currentUser = userService.getCurrentUser();
-//	        if (currentUser != null) {
-//	            favoriteService.removeFavorite(id, currentUser.getId());
-//	
-//	            redirectAttributes.addFlashAttribute("message", "お気に入りを解除しました。");
-//	          } else {
-//	        	  redirectAttributes.addFlashAttribute("errorMessage", "ユーザーが認識されませんでした。");
-//	          }
-//	        } catch (Exception e) {	
-//	        	e.printStackTrace();	
-//	        	redirectAttributes.addFlashAttribute("errorMessage", "お気に入りの解除中にエラーが発生しました: " + e.getMessage());
-//	        }
-//	        return "redirect:/restaurants/" + id;
-//    }
 }

@@ -21,7 +21,6 @@ import com.stripe.exception.StripeException;
 @RestController
 @RequestMapping("/api")
 public class PaymentController {
-	//private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);	
 	
 	@Autowired
     private StripeService stripeService;
@@ -37,7 +36,6 @@ public class PaymentController {
         String paymentMethodId = customerService.getPaymentMethodId(userDetails.getUser().getId());
        
         if(paymentMethodId == null) {
-          //  logger.error("Payment Method ID is null for user: " + userDetails.getUser().getEmail());
             return ResponseEntity.status(400).body(Map.of("error", "Payment Method ID not provided"));
         }
         
@@ -51,7 +49,6 @@ public class PaymentController {
         String customerId = customerService.getStripeCustomerId(userDetails.getUser().getEmail()); // 顧客IDを取得
         
         if(customerId == null) {
-            //logger.error("Customer ID is null for user: " + userDetails.getUser().getEmail());
             return ResponseEntity.status(400).body(Map.of("error", "Customer ID not found"));
         }
         
@@ -68,21 +65,18 @@ public class PaymentController {
     @PostMapping("/updatePaymentMethod")
     public ResponseEntity<?> updatePaymentMethod(@RequestBody Map<String, String> payload, @AuthenticationPrincipal UserDetailsImpl userDetails) {
     	if (userDetails == null || userDetails.getUser() == null) {
-           // logger.error("User not found in the context");
             return ResponseEntity.status(401).body(Map.of("success", false, "error", "User not authenticated"));
         }
     	
     	String paymentMethodId = payload.get("paymentMethodId");
     	
     	if(paymentMethodId == null) {
-          //  logger.error("Payment Method ID is null for user: " + userDetails.getUser().getEmail());
             return ResponseEntity.status(400).body(Map.of("error", "Payment Method ID not provided"));
         }
     	
         String customerId = customerService.getStripeCustomerId(userDetails.getUser().getEmail()); // 実際の顧客IDを取得するロジックを追加
         
         if(customerId == null) {
-          //  logger.error("Customer ID is null for user: " + userDetails.getUser().getEmail());
             return ResponseEntity.status(400).body(Map.of("error", "Customer ID not found"));
         }
 
@@ -90,7 +84,6 @@ public class PaymentController {
             stripeService.updateDefaultPaymentMethod(customerId, paymentMethodId);
             return ResponseEntity.ok(Map.of("success", true));
         } catch (StripeException e) {
-        //	logger.error("StripeException: " + e.getMessage());
             return ResponseEntity.status(500).body(Map.of("success", false, "error", e.getMessage()));
         }
     }
@@ -99,21 +92,18 @@ public class PaymentController {
     @PostMapping("/deletePaymentMethod")
     public ResponseEntity<?> deletePaymentMethod(@RequestBody Map<String, String> payload, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		if (userDetails == null || userDetails.getUser() == null) {
-          //  logger.error("User not found in the context");
             return ResponseEntity.status(401).body(Map.of("success", false, "error", "User not authenticated"));
         }
 		
 		String paymentMethodId = payload.get("paymentMethodId");
 		
 		if(paymentMethodId == null) {
-	      //  logger.error("Payment Method ID is null for user: " + userDetails.getUser().getEmail());
 	        return ResponseEntity.status(400).body(Map.of("error", "Payment Method ID not provided"));
 	    }
 		
         String customerId = customerService.getStripeCustomerId(userDetails.getUser().getEmail());
         
         if(customerId == null) {
-          //  logger.error("Customer ID is null for user: " + userDetails.getUser().getEmail());
             return ResponseEntity.status(400).body(Map.of("error", "Customer ID not found"));
         }
         
@@ -121,7 +111,6 @@ public class PaymentController {
             stripeService.detachPaymentMethod(paymentMethodId);
             return ResponseEntity.ok(Map.of("success", true));
         } catch (StripeException e) {
-          //	logger.error("StripeException: " + e.getMessage());
             return ResponseEntity.status(500).body(Map.of("success", false, "error", e.getMessage()));
         }
     }

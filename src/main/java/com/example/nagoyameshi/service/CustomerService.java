@@ -22,8 +22,6 @@ public class CustomerService {
 	@Value("${stripe.api-key}")
 	private String stripeApiKey;
 	
-	//private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-	
 	 private final UserRepository userRepository;
      private final RoleRepository roleRepository;
      private final PasswordEncoder passwordEncoder;
@@ -57,8 +55,6 @@ public class CustomerService {
              String stripeCustomerId = stripeService.createCustomer(user.getEmail());
              user.setStripeCustomerId(stripeCustomerId);
          } catch (StripeException e) {
-             //logger.error("Failed to create Stripe customer", e);
-             // 必要に応じて適切な処理を行う(例: カスタム例外をスロー)
              throw new RuntimeException("Failed to create Stripe customer: " + e.getMessage(), e);
          }
 
@@ -69,15 +65,9 @@ public class CustomerService {
 	 public String getStripeCustomerId(String email) {
     	 User user = userRepository.findByEmail(email)
     	            .orElseThrow(() -> {
-    	         //       logger.error("User not found with email: {}", email);
     	                return new UserNotFoundException("User not found with email: " + email);
     	            });
     	    String customerId = user.getStripeCustomerId();
-//    	    if (customerId == null) {
-//    	        logger.error("Stripe Customer ID is null for user: {}", email);
-//    	    } else {
-//    	        logger.debug("Fetched Stripe Customer ID {} for user: {}", customerId, email);
-//    	    }
     	    return customerId;
     	
      }
@@ -91,10 +81,8 @@ public class CustomerService {
  	    Map<String, Object> params = new HashMap<>();
  	    params.put("invoice_settings", invoiceSettings);
 
- 	    customer.update(params);
- 	    
- 	 //   logger.debug("Updated default payment method for customer ID {}: {}", customerId, paymentMethodId);
- 	}
+ 	    customer.update(params);    
+    }
 
 	public String getPaymentMethodId(Integer id) {
 		return null;

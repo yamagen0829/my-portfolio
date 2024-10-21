@@ -80,11 +80,7 @@ public class ReviewController {
         if (currentUser != null) {
             isPaidUser = currentUser.getPaid() != null? currentUser.getPaid() : false;
         }
-//    	User currentUser = userDetailsImpl.getUser();
-//    	if (currentUser.getPaid() == null || !currentUser.getPaid()) {
-//            return "redirect:/user/paid"; // 有料会員ページにリダイレクト
-//        }
-    	
+        
     	model.addAttribute("reviewForm", new ReviewForm());
         model.addAttribute("restaurant", restaurantService.findById(restaurantId));
         model.addAttribute("isPaidUser", isPaidUser);

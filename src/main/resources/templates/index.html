@@ -26,30 +26,6 @@
                          <span th:text="${successMessage}"></span>
                      </div>
                      
-                     <!-- 管理者用の集計結果表示 -->
-                    <div th:if="${isAdmin}" class="stats-container">
-                        <div class="stats-item">
-                            <h3>総会員数</h3>
-                            <p th:text="${totalUsers}"></p>
-                        </div>
-                        <div class="stats-item">
-                            <h3>無料会員数</h3>
-                            <p th:text="${freeMembership}"></p>
-                        </div>
-                        <div class="stats-item">
-                            <h3>有料会員数</h3>
-                            <p th:text="${paidMembership}"></p>
-                        </div>
-                        <div class="stats-item">
-                            <h3>店舗数</h3>
-                            <p th:text="${totalRestaurants}"></p>
-                        </div>
-                        <div class="stats-item">
-                            <h3>月間売上</h3>
-                            <p th:text="${monthlySales}"></p>
-                        </div>
-                    </div>
-                     
                      <div class="d-flex justify-content-center">                                            
                          <form method="get" th:action="@{/restaurants}" class="mb-5 nagoyameshi-search-form">
                              <div class="input-group">
@@ -90,10 +66,10 @@
                                      <tr>
                                          <th>愛知県名古屋市</th>
                                          <td>
-                                             <a th:href="@{/restaurants?address=}">西五条東</a>
-                                             <a th:href="@{/restaurants?address=}">西五条西</a>
-                                             <a th:href="@{/restaurants?address=}">西五条南</a>
-                                             <a th:href="@{/restaurants?address=}">西五条北</a>
+                                             <a th:href="@{/restaurants?address=西五条東}">西五条東</a>
+                                             <a th:href="@{/restaurants?address=西五条西}">西五条西</a>
+                                             <a th:href="@{/restaurants?address=西五条南}">西五条南</a>
+                                             <a th:href="@{/restaurants?address=西五条北}">西五条北</a>
                                          </td>                                     
                                      </tr>                                                                                                                                                                                                                                                                                                      
                                  </tbody>

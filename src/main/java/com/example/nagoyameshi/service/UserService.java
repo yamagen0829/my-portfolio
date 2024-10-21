@@ -19,7 +19,6 @@ import com.example.nagoyameshi.repository.VerificationTokenRepository;
 
 @Service
 public class UserService {
-	// private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	
 	 private final UserRepository userRepository;
      private final RoleRepository roleRepository;
@@ -31,7 +30,6 @@ public class UserService {
          this.roleRepository = roleRepository;        
          this.passwordEncoder = passwordEncoder;
          this.verificationTokenRepository = verificationTokenRepository;
-//         this.stripeService = stripeService;
      }    
      
      @Transactional
@@ -163,10 +161,6 @@ public class UserService {
 	public User findByEmail(String email) {
     	 User user = userRepository.findByEmail(email)
 		           .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
-//		 
-//		// ログを追加
-//		    logger.info("Found user: {}", user);
-//		    
 		    return user;
 	}
 }

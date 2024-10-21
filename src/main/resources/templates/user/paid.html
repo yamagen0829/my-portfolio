@@ -35,10 +35,7 @@
                              <div th:if="${errorMessage}" class="alert alert-danger">
                                 <span th:text="${errorMessage}"></span>
                             </div> 
-                            
-                            <!-- デバッグのためにユーザーの状態を表示する -->	
-<!--                            <p>ユーザーの会員状態: <span th:text="${user.paid}">未払い</span></p>                              -->
-                             
+                                
 	                       <p th:if="${user.paid == false}" class="text-center"> 有料会員(サブスクリプションに入る）と以下の機能が使えます。<br>月額300円からサブスクリプション契約できます。</p>
 	                       <p th:if="${user.paid == true}" class="text-center"> 無料会員になると以下の機能が使えなくなります。</p>
 	                         <ul>

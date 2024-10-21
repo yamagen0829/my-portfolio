@@ -153,18 +153,13 @@ public class UserController {
 
             User user = userService.findByEmail(payload.get("email"));
             if (user == null || user.getStripeCustomerId() == null) {
-            //	logger.error("stripe customer not found: email:{}, user: {}", payload.get("email"), (user != null ? user.getId() : ""));
             	
                 throw new UserNotFoundException("No user found or User does not have a Stripe Customer ID");
             }
-            
-            // ログを追加
-          //  logger.info("Creating billing portal for customer: {}", user.getStripeCustomerId());
-            
+              
             String url = stripeService.createBillingPortalSession(user.getStripeCustomerId(), returnUrl);
             response.put("url", url);
         } catch (Exception e) {
-          //  logger.error("Error creating billing portal session", e);
             response.put("errorMessage", "Billingポータルの生成でエラーが発生しました。");
         }
         return response;
